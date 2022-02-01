@@ -21,8 +21,8 @@ namespace UTIL_SDL
             printf("%s\n", SDL_GetError());
 			return NULL;
 		}
+
 		//SDL_WM_SetIcon(SDL_LoadBMP("icon1.bmp"), NULL);
-		//int flags = SDL_OPENGL | (fscreen?SDL_FULLSCREEN:0);
 /*		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -35,11 +35,12 @@ namespace UTIL_SDL
 		SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
 		SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 0);
 
+        int flags = SDL_WINDOW_OPENGL | (fscreen?SDL_WINDOW_FULLSCREEN:0);
         SDL_Window *window = SDL_CreateWindow(
             winName,
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
             width, height,
-            SDL_WINDOW_OPENGL);
+            flags);
 
         if (window == NULL)
 		{
