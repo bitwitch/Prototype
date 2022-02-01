@@ -2,7 +2,7 @@
 #ifdef WIN32
 #include <sdl.h>
 #else
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #endif
 class Timer
 {

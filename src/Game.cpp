@@ -25,7 +25,7 @@ void Engine::StartGame()
 	mFont1.SetBlendMode(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	mFont1.SetScale(0.5f,1.0f);
 	mFont1.Print("LOADING...",550,430);
-	SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(window);
 
 	LoadMapData();
 	mPlayer.StartGame();

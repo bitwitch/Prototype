@@ -2,7 +2,7 @@
 #ifdef WIN32
 #include <sdl.h>
 #else
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #endif
 #include "UTIL_openGL.h"
 #include "Log.h"
@@ -14,7 +14,7 @@
 //================================================================================================//
 namespace UTIL_SDL
 {
-	bool InitSDL(const char* winName, int width, int height, int bpp, bool vsync, bool fscreen);
+	SDL_Window *InitSDL(const char* winName, int width, int height, int bpp, bool vsync, bool fscreen);
 	bool InitJoystick();
 //================================================================================================//
 									/*********************

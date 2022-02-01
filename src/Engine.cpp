@@ -44,8 +44,9 @@ Engine::Engine(int width, int height, bool fscreen, const char* winName)
 	fscreen = fullscreen?true:false;
 
 	//init
-	if(!UTIL_SDL::InitSDL(winName,winWidth,winHeight,bpp,vsync?true:false,fscreen))
-		return;
+    window = UTIL_SDL::InitSDL(winName,winWidth,winHeight,bpp,vsync?true:false,fscreen);
+    if (window == NULL)
+        return;
 	InitializeRenderTargets();
 
 	//init joystick support
@@ -82,7 +83,7 @@ Engine::Engine(int width, int height, bool fscreen, const char* winName)
 	mFont1.SetBlendMode(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	mFont1.SetScale(0.5f,1.0f);
 	mFont1.Print("LOADING...",550,430);
-	SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(window);
 
 	fGameDifficulty = 3;//easy
 	float delayStartup = mTimer.GetTime()+2;
@@ -266,7 +267,7 @@ PROFILE_START_SLICE("ENGINE_Render");
 PROFILE_END_SLICE("ENGINE_Render");
 	if(bScanlines)
 		RenderScanLines();
-	SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(window);
 
 PROFILE_END_SLICE("ENGINE_Pump");
 PROFILE_FRAME_END;

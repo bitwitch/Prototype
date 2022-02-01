@@ -3,9 +3,9 @@
 #include <sdl.h>
 #include "SDL_mixer.h"
 #else
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #if defined(__linux__)
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 #else
 #include "SDL_Mixer/SDL_Mixer.h"
 #endif
@@ -67,14 +67,17 @@ void Stream::Seek(int ms, int channel)
 void FSOUND_Init(int mixrate, int maxchannels, int flags)
 {
 	
-	SDL_Init(SDL_INIT_AUDIO);
+    if (SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+        printf("Failed to initialize audio: %s\n", SDL_GetError());
+    }
 
 	int audio_buffers = 4096;
 
 	//Mix_AllocateChannels(maxchannels);
 
 	if(Mix_OpenAudio(mixrate, AUDIO_U8,1, audio_buffers)) {
-		printf("Unable to open audio!\n");
+		printf("Unable to open audio: %s\n", Mix_GetError());
 		getchar();
 	}
 

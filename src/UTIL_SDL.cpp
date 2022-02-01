@@ -12,17 +12,17 @@ namespace UTIL_SDL
 									 ** Initialize SDL **
 									 ********************/
 //================================================================================================//
-	bool InitSDL(const char* winName, int width, int height, int bpp, bool vsync, bool fscreen)
+	SDL_Window  *InitSDL(const char* winName, int width, int height, int bpp, bool vsync, bool fscreen)
 	{
 		gLog.OutPut("\n[Initializing Video Settings]\n");
-		const SDL_VideoInfo* info = NULL;
-		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_NOPARACHUTE) < 0 || !(info = SDL_GetVideoInfo()))
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_NOPARACHUTE) < 0)
 		{
 			gLog.OutPut("\n[Failed to initialize Video Settings]\n");
-			return false;
+            printf("%s\n", SDL_GetError());
+			return NULL;
 		}
-		SDL_WM_SetIcon(SDL_LoadBMP("icon1.bmp"), NULL);
-		int flags = SDL_OPENGL | (fscreen?SDL_FULLSCREEN:0);
+		//SDL_WM_SetIcon(SDL_LoadBMP("icon1.bmp"), NULL);
+		//int flags = SDL_OPENGL | (fscreen?SDL_FULLSCREEN:0);
 /*		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -35,11 +35,30 @@ namespace UTIL_SDL
 		SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
 		SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 0);
 
-		if(SDL_SetVideoMode(width, height, bpp, flags) == 0)
+        SDL_Window *window = SDL_CreateWindow(
+            winName,
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+            width, height,
+            SDL_WINDOW_OPENGL);
+
+        if (window == NULL)
 		{
 			SDL_Quit();
-			return false;
+			return NULL;
 		}
+
+        if (SDL_GL_CreateContext(window) == NULL)
+		{
+			SDL_Quit();
+			return NULL;
+		}
+
+		//if(SDL_SetVideoMode(width, height, bpp, flags) == 0)
+		//{
+			//SDL_Quit();
+			//return false;
+		//}
+
 		stringstream(str);
 		str << "Resolution Set: " << width << "x" << height << "x" << bpp << endl;
 		gLog.OutPut(str.str());
@@ -62,9 +81,8 @@ namespace UTIL_SDL
 			gLog.OutPut("Vsync Enabled.\n");
 		}
 */		SDL_ShowCursor(0);
-		SDL_WM_SetCaption(winName, NULL);
 		gLog.OutPut("Complete...\n\n");
-		return true;
+		return window;
 	}
 //================================================================================================//
 									/*************************

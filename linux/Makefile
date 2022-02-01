@@ -78,7 +78,7 @@ CC := g++
 CFLAGS := -Wall -O2 -Wno-write-strings -Wno-unknown-pragmas -I../src
 CFLAGS += -I$(DEVIL_DIR)/include
 LD := g++
-LFLAGS := -lSDL -lSDL_mixer -lGL -lGLEW -L$(DEVIL_DIR)/lib -lIL -lILU -lILUT
+LFLAGS := -lSDL2 -lSDL2_mixer -lGL -lGLEW -L$(DEVIL_DIR)/lib -lIL -lILU -lILUT
 
 all: $(X_FILES)
 $(X_FILES): $(O_FILES)

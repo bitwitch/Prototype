@@ -4,7 +4,7 @@
     #include <windows.h>
     #include <sdl.h>
 #else
-    #include <SDL/SDL.h>
+    #include <SDL2/SDL.h>
     #include <unistd.h>
     #include <cstring>
     #define DeleteFile ::unlink
@@ -86,6 +86,7 @@ private:
 	bool bScanlines;
 	bool bHyperMode;//super fast mode lol
 	bool bInGame;
+    SDL_Window *window;
 
 	//initialization
 	bool InitSDL(bool fscreen, char* winName, int vsync, int bpp);
